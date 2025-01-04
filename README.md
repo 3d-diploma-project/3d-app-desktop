@@ -1,6 +1,6 @@
 # Tetrahedron (desktop)
 
-### To run the project locally:
+### To run the project locally
 
 - Download the Java JDK 21 and install: [https://www.oracle.com/java/technologies/downloads/](https://www.oracle.com/java/technologies/downloads/)
 - Maven is required for dependency management and project build
@@ -14,3 +14,16 @@
 
     ![image](https://github.com/user-attachments/assets/fce03f62-2e13-436e-8c02-59319ea6c558)
 - Launch the program in file `src/main/java/org/cmps/tetrahedron/Tetrahedron.java`
+
+### To build executable file
+#### Pre requirements
+- Only fo Windows: Install WiX 3.0
+
+#### How to build
+- Build a project using maven
+ ```shell
+    mvn clean package
+ ```
+- Run a script
+  - Windows: [installer-win.bat](installer-win.bat)
+  - MacOS: [installer-mac.sh](installer-mac.sh)
