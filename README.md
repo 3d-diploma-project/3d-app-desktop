@@ -17,7 +17,9 @@
 
 ### To build executable file
 #### Pre requirements
-- Only fo Windows: Install WiX 3.0
+Only fo Windows: 
+- Install [WiX 3](https://wixtoolset.org/docs/wix3/). 
+- Add it to the PATH. Path example: "C:\Program Files (x86)\WiX Toolset v3.14\bin"
 
 #### How to build
 - Build a project using maven
