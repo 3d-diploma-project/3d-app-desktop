@@ -14,7 +14,9 @@ import java.util.List;
 public class Stress {
 
     private List<Float> stress;
+    @Builder.Default
     private float minStress = Float.MAX_VALUE;
+    @Builder.Default
     private float maxStress = Float.MIN_VALUE;
 
     private List<float[]> colors;
