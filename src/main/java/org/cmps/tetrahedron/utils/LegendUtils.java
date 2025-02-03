@@ -21,7 +21,7 @@ public class LegendUtils {
         System.out.println("{");
         for (int i = 0; i < COLOR_ARRAY_SIZE; i++) {
             float stress = min + (stressChunk * i);
-            stressColorMap.put(stress, i);
+            stressColorMap.put(stress, COLOR_ARRAY_SIZE - i - 1);
             System.out.print(stress + "f, " + (COLOR_ARRAY_SIZE - i - 1) + (i == COLOR_ARRAY_SIZE - 1 ? "" : ","));
             System.out.println(" //" + Arrays.toString(COLORS.get(COLOR_ARRAY_SIZE - i - 1)));
         }
