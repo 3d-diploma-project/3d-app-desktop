@@ -21,6 +21,7 @@ public class ModelController {
     private Model model;
     @Setter
     private boolean modelReady = false;
+    @Getter
     private Stress stress;
     @Setter
     private boolean stressDataLoaded = false;

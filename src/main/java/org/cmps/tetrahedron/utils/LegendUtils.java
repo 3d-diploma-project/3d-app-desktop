@@ -31,13 +31,11 @@ public class LegendUtils {
     }
 
     private static Map<Integer, float[]> getColors() {
-
         double jump = 0.66 / (COLOR_ARRAY_SIZE * 1.0);
         Map<Integer, float[]> colors = new HashMap<>();
 
         for (int i = 0; i < COLOR_ARRAY_SIZE; i++) {
             Color color = Color.getHSBColor((float) (jump * i), 0.7f, 0.7f);
-
             colors.put(i, new float[]{color.getRed() / 255f, color.getGreen() / 255f, color.getBlue() / 255f});
         }
 

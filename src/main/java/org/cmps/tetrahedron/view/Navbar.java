@@ -1,7 +1,6 @@
 package org.cmps.tetrahedron.view;
 
 import javafx.geometry.Pos;
-import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
@@ -10,7 +9,7 @@ import javafx.scene.layout.VBox;
 
 public class Navbar extends HBox {
 
-    public Navbar(Scene scene) {
+    public Navbar() {
         getStyleClass().add("navbar");
 
         VBox logo = new Logo();
