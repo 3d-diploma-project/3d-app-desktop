@@ -95,11 +95,6 @@ public class ModelFilesPicker {
     }
 
     private boolean validateVerticesFile(File verticesFile) {
-        if (verticesFile == null || !verticesFile.exists()) {
-            showError("Vertices file is missing or invalid.");
-            return false;
-        }
-
         try {
             Map<Integer, float[]> vertices = DataReader.readVertices(verticesFile);
             if (vertices.isEmpty()) {
