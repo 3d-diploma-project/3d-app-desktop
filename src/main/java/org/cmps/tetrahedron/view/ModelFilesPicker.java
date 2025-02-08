@@ -11,11 +11,15 @@ import javafx.stage.WindowEvent;
 import lombok.Setter;
 import org.cmps.tetrahedron.Tetrahedron;
 import org.cmps.tetrahedron.controller.ModelController;
+import org.cmps.tetrahedron.utils.DataReader;
 import org.cmps.tetrahedron.utils.ResourceReader;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Objects;
 
 public class ModelFilesPicker {
@@ -57,7 +61,7 @@ public class ModelFilesPicker {
 
     public void onClick() {
         boolean nodesValidation = validateFileExistence(nodesController);
-        boolean indicesValidation = validateFileExistence(indicesController);
+        boolean indicesValidation = validateFileExistence(indicesController) && validateIndicesFile(indicesController.getFile());
 
         if (!nodesValidation || !indicesValidation) {
             return;
@@ -76,11 +80,37 @@ public class ModelFilesPicker {
     }
 
     private boolean validateFileExistence(FilePicker filePicker) {
-        if (filePicker.getFile() == null) {
+        File file = filePicker.getFile();
+
+        if (file == null) {
             filePicker.showNotSelectedFileError();
             return false;
         }
 
+        if (!file.getName().toLowerCase().endsWith(".txt")) {
+            showError("Invalid file format. Only .txt files are allowed: " + file.getName());
+            return false;
+        }
+
         return true;
+    }
+
+    private boolean validateIndicesFile(File indicesFile) {
+        try {
+            List<float[][]> faces = DataReader.readIndexesAndConvertToFaces(indicesFile, new HashMap<>());
+            if (faces.isEmpty()) {
+                showError("Indices file is empty.");
+                return false;
+            }
+        } catch (Exception e) {
+            showError("Error reading indices file: " + e.getMessage());
+            return false;
+        }
+
+        return true;
+    }
+
+    private void showError(String message) {
+        System.err.println(message);
     }
 }

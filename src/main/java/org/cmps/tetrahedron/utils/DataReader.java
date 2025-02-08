@@ -54,6 +54,11 @@ public class DataReader {
             List<float[][]> faces = new ArrayList<>();
             while (fid.hasNextLine()) {
                 String[] elements = fid.nextLine().trim().split("\\s+");
+
+                if (elements.length < 4 || elements.length > 5) {
+                    throw new IllegalArgumentException("Expected 4 or " + FACE_WITH_INDICES + " numbers, got " + elements.length);
+                }
+
                 float[][] tetrahedron = new float[4][];
                 int startIndex;
 
