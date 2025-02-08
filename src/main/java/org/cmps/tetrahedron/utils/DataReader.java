@@ -24,6 +24,10 @@ public class DataReader {
                 String[] elements = fid.nextLine().trim().split("\\s+");
                 int index, startIndex;
 
+                if (elements.length < 3 || elements.length > 4) {
+                    throw new IllegalArgumentException("Expected 3 or " + VERTICES_WITH_INDICES + " space-separated values, got " + elements.length);
+                }
+
                 if (elements.length == VERTICES_WITH_INDICES) {
                     index = Integer.parseInt(elements[0]);
                     startIndex = 1;
@@ -58,7 +62,7 @@ public class DataReader {
                 int startIndex;
 
                 startIndex = elements.length == FACE_WITH_INDICES ? 1 : 0;
-                for (int j = startIndex; j < elements.length; j++){
+                for (int j = startIndex; j < elements.length; j++) {
                     tetrahedron[j - startIndex] = verticesCoordinates.get(Integer.parseInt(elements[j]));
                 }
 

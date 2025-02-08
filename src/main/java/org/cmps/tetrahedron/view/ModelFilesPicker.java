@@ -11,11 +11,14 @@ import javafx.stage.WindowEvent;
 import lombok.Setter;
 import org.cmps.tetrahedron.Tetrahedron;
 import org.cmps.tetrahedron.controller.ModelController;
+import org.cmps.tetrahedron.utils.DataReader;
 import org.cmps.tetrahedron.utils.ResourceReader;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.util.Map;
 import java.util.Objects;
 
 public class ModelFilesPicker {
@@ -56,7 +59,7 @@ public class ModelFilesPicker {
     }
 
     public void onClick() {
-        boolean nodesValidation = validateFileExistence(nodesController);
+        boolean nodesValidation = validateFileExistence(nodesController) && validateVerticesFile(nodesController.getFile());
         boolean indicesValidation = validateFileExistence(indicesController);
 
         if (!nodesValidation || !indicesValidation) {
@@ -76,11 +79,42 @@ public class ModelFilesPicker {
     }
 
     private boolean validateFileExistence(FilePicker filePicker) {
-        if (filePicker.getFile() == null) {
+        File file = filePicker.getFile();
+
+        if (file == null) {
             filePicker.showNotSelectedFileError();
             return false;
         }
 
+        if (!file.getName().toLowerCase().endsWith(".txt")) {
+            showError("Invalid file format. Only .txt files are allowed: " + file.getName());
+            return false;
+        }
+
         return true;
+    }
+
+    private boolean validateVerticesFile(File verticesFile) {
+        if (verticesFile == null || !verticesFile.exists()) {
+            showError("Vertices file is missing or invalid.");
+            return false;
+        }
+
+        try {
+            Map<Integer, float[]> vertices = DataReader.readVertices(verticesFile);
+            if (vertices.isEmpty()) {
+                showError("Vertices file is empty.");
+                return false;
+            }
+        } catch (Exception e) {
+            showError("Error reading vertices file: " + e.getMessage());
+            return false;
+        }
+
+        return true;
+    }
+
+    private void showError(String message) {
+        System.err.println(message);
     }
 }
