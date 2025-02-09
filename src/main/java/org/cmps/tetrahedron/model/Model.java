@@ -18,7 +18,7 @@ public class Model {
 
     public Vector3f getModelCenter() {
         if (vertices == null || vertices.isEmpty()) {
-            throw new RuntimeException("Model has no vertices");
+            System.err.print("Model has no vertices");
         }
 
         float sumX = 0, sumY = 0, sumZ = 0;
@@ -30,7 +30,7 @@ public class Model {
             sumZ += vertex[2];
         }
 
-        System.err.println("Model Center: " + sumX / vertexCount + ", " + sumY / vertexCount + ", " + sumZ / vertexCount);
+        System.out.println("Model Center: " + sumX / vertexCount + ", " + sumY / vertexCount + ", " + sumZ / vertexCount);
         return new Vector3f(sumX / vertexCount, sumY / vertexCount, sumZ / vertexCount);
     }
 
