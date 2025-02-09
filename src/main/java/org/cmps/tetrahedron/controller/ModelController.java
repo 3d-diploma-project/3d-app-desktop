@@ -42,7 +42,7 @@ public class ModelController {
                      .build();
         modelReady = true;
 
-        centerModel(model);
+        centerModel();
     }
 
     public List<float[][]> getFaces() {
@@ -68,7 +68,7 @@ public class ModelController {
         stressDataLoaded = true;
     }
 
-    public void centerModel(Model model) {
+    private void centerModel() {
         Vector3f center = model.getModelCenter();
 
         Map<Integer, float[]> vertices = ModelController.getInstance().getVertices();
