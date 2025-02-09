@@ -1,5 +1,7 @@
 package org.cmps.tetrahedron.utils;
 
+import lombok.Getter;
+
 import java.awt.*;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -8,6 +10,7 @@ import java.util.TreeMap;
 
 public class LegendUtils {
 
+    @Getter
     private static final int COLOR_ARRAY_SIZE = 7;
 
     public static final Map<Integer, float[]> COLORS = getColors();

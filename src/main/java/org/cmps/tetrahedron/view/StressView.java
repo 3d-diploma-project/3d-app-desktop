@@ -17,6 +17,8 @@ import java.util.TreeMap;
 
 public class StressView extends VBox {
 
+    private final boolean isColorArrayLarge = LegendUtils.getCOLOR_ARRAY_SIZE() > 11;
+
     public StressView() {
 
         Map<Integer, float[]> colors = LegendUtils.COLORS;
@@ -29,9 +31,13 @@ public class StressView extends VBox {
         for (Map.Entry<Integer, float[]> entry : colors.entrySet()) {
             float[] values = entry.getValue();
             VBox colorBox = new VBox();
-            colorBox.setMinSize(100, 20);
-            colorBox.setStyle("-fx-background-color: " + toHex(values[0], values[1], values[2]) + ";");
 
+            colorBox.setMinSize(100, 20);
+            if (isColorArrayLarge) {
+                colorBox.setMinSize(80, 20);
+            }
+
+            colorBox.setStyle("-fx-background-color: " + toHex(values[0], values[1], values[2]) + ";");
             allColorBoxes.getChildren().add(colorBox);
         }
         getChildren().add(allColorBoxes);
@@ -43,6 +49,10 @@ public class StressView extends VBox {
         for (String border: ranges) {
             Label rangeValue = new Label(border);
             rangeValue.setFont(FontUtils.getGeolocicaFont(16));
+            if (isColorArrayLarge) {
+                rangeValue.setFont(FontUtils.getGeolocicaFont(14));
+                allLabelBoxes.setSpacing(25);
+            }
             allLabelBoxes.getChildren().add(rangeValue);
         }
         getChildren().add(allLabelBoxes);
