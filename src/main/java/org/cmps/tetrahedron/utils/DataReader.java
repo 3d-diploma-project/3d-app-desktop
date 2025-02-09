@@ -57,10 +57,6 @@ public class DataReader {
                 String[] elements = fid.nextLine().trim().split("\\s+");
 
                 if (elements.length < 4 || elements.length > 5) {
-                    new ErrorDialog("Помилка!", """
-                            Матриця індексів використовує неіснуючі координати.\s
-
-                            Перевірте дані та спробуйте знову""").show();
                     throw new IllegalArgumentException("Expected 4 or " + FACE_WITH_INDICES + " numbers, got " + elements.length);
                 }
 

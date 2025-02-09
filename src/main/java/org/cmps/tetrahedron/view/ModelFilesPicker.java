@@ -25,6 +25,7 @@ import java.util.Objects;
 public class ModelFilesPicker {
 
     private final ModelController modelController = ModelController.getInstance();
+    private boolean errorDialogShown = false;
 
     @FXML
     private FilePicker nodesController;
@@ -64,7 +65,11 @@ public class ModelFilesPicker {
         boolean indicesValidation = validateFileExistence(indicesController) && validateIndicesFile(indicesController.getFile());
 
         if (!nodesValidation || !indicesValidation) {
-            new ErrorDialog("Помилка!", "Неможливо зчитати матрицю індексів та таблицю координат.\n\nПеревірте дані та спробуйте знову!").show();
+            if (!errorDialogShown) {
+                errorDialogShown = true;
+                new ErrorDialog("Помилка!", "Неможливо зчитати матрицю індексів та таблицю координат.\n\nПеревірте дані та спробуйте знову!").show();
+                errorDialogShown = false;
+            }
             return;
         }
 
@@ -99,7 +104,11 @@ public class ModelFilesPicker {
                 return false;
             }
         } catch (Exception e) {
-            showError("Error reading indices file: " + e.getMessage());
+            new ErrorDialog("Помилка!", """
+                            Матриця індексів використовує неіснуючі координати.\s
+
+                            Перевірте дані та спробуйте знову""").show();
+            errorDialogShown = true;
             return false;
         }
 
