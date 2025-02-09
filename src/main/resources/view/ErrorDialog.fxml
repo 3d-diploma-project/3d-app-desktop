@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<DialogPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            stylesheets="@/style/error-dialog.css"
+            minWidth="400" minHeight="250">
+    <content>
+        <StackPane>
+            <VBox alignment="CENTER" spacing="30" maxWidth="291" maxHeight="268">
+                <Label fx:id="errorTitle" styleClass="error-title" text="Помилка!" />
+                <Label fx:id="errorMessage" styleClass="error-message" wrapText="true" text="Опис помилки"/>
+                <Button fx:id="closeButton" text="Ок" styleClass="error-button" onMouseClicked="#closeDialog"/>
+            </VBox>
+        </StackPane>
+    </content>
+</DialogPane>

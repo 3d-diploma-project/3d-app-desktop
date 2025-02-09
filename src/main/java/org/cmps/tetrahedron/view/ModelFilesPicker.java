@@ -24,6 +24,7 @@ import java.util.Objects;
 public class ModelFilesPicker {
 
     private final ModelController modelController = ModelController.getInstance();
+    private boolean errorDialogShown = false;
 
     @FXML
     private FilePicker nodesController;
@@ -63,6 +64,11 @@ public class ModelFilesPicker {
         boolean indicesValidation = validateFileExistence(indicesController);
 
         if (!nodesValidation || !indicesValidation) {
+            if (!errorDialogShown) {
+                errorDialogShown = true;
+                new ErrorDialog("Помилка!", "Неможливо зчитати матрицю індексів та таблицю координат.\n\nПеревірте дані та спробуйте знову!").show();
+                errorDialogShown = false;
+            }
             return;
         }
 
@@ -97,7 +103,9 @@ public class ModelFilesPicker {
                 return false;
             }
         } catch (Exception e) {
-            showError("Error reading vertices file: " + e.getMessage());
+            // there should be another text here
+            new ErrorDialog("Помилка!", "Неможливо зчитати матрицю індексів та таблицю координат.\n\nПеревірте дані та спробуйте знову!").show();
+            errorDialogShown = true;
             return false;
         }
 
