@@ -6,6 +6,7 @@ import org.cmps.tetrahedron.model.Model;
 import org.cmps.tetrahedron.model.Stress;
 import org.cmps.tetrahedron.utils.DataReader;
 import org.cmps.tetrahedron.utils.LegendUtils;
+import org.joml.Vector3f;
 
 import java.io.File;
 import java.util.*;
@@ -40,6 +41,8 @@ public class ModelController {
                      .faces(DataReader.readIndexesAndConvertToFaces(indices, vertices))
                      .build();
         modelReady = true;
+
+        centerModel(model);
     }
 
     public List<float[][]> getFaces() {
@@ -63,5 +66,17 @@ public class ModelController {
                                .toList());
 
         stressDataLoaded = true;
+    }
+
+    public void centerModel(Model model) {
+        Vector3f center = model.getModelCenter();
+
+        Map<Integer, float[]> vertices = ModelController.getInstance().getVertices();
+        for (Map.Entry<Integer, float[]> entry : vertices.entrySet()) {
+            float[] vertex = entry.getValue();
+            vertex[0] -= center.x;
+            vertex[1] -= center.y;
+            vertex[2] -= center.z;
+        }
     }
 }
