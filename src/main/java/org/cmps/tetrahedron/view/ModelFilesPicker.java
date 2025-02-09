@@ -86,11 +86,6 @@ public class ModelFilesPicker {
             return false;
         }
 
-        if (!file.getName().toLowerCase().endsWith(".txt")) {
-            showError("Invalid file format. Only .txt files are allowed: " + file.getName());
-            return false;
-        }
-
         return true;
     }
 
