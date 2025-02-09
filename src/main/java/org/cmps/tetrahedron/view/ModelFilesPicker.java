@@ -64,6 +64,7 @@ public class ModelFilesPicker {
         boolean indicesValidation = validateFileExistence(indicesController) && validateIndicesFile(indicesController.getFile());
 
         if (!nodesValidation || !indicesValidation) {
+            new ErrorDialog("Помилка!", "Неможливо зчитати матрицю індексів та таблицю координат.\n\nПеревірте дані та спробуйте знову!").show();
             return;
         }
 
