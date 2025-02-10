@@ -1,5 +1,6 @@
 package org.cmps.tetrahedron.utils;
 
+import org.cmps.tetrahedron.exception.ModelValidationException;
 import org.cmps.tetrahedron.model.Stress;
 
 import java.io.File;
@@ -51,13 +52,22 @@ public class DataReader {
     }
 
     public static List<float[][]> readIndexesAndConvertToFaces(File indicesMatrix,
-                                                               Map<Integer, float[]> verticesCoordinates) {
+                                                               Map<Integer, float[]> verticesCoordinates)
+            throws ModelValidationException {
         Locale.setDefault(US);
 
         try (Scanner fid = new Scanner(indicesMatrix)) {
             List<float[][]> faces = new ArrayList<>();
             while (fid.hasNextLine()) {
                 String[] elements = fid.nextLine().trim().split("\\s+");
+
+                if (elements.length < 4 || elements.length > 5) {
+                    throw new ModelValidationException("""
+                            Для кожного елементу має бути вказано 4 індекси координат.\s
+                                                             
+                            Перевірте дані та спробуйте знову""");
+                }
+
                 float[][] tetrahedron = new float[4][];
                 int startIndex;
 
@@ -78,8 +88,11 @@ public class DataReader {
             }
 
             return faces;
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
+        } catch (FileNotFoundException | NumberFormatException e) {
+            throw new ModelValidationException("""
+                            Помилка під час зчитування матриці індексів.\s
+                            
+                            Перевірте дані та спробуйте знову""");
         }
     }
 

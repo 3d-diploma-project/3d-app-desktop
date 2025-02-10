@@ -2,12 +2,13 @@ package org.cmps.tetrahedron.view;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Dialog;
-import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
+import javafx.scene.layout.Pane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
-
+import javafx.stage.StageStyle;
 import java.io.IOException;
 import java.net.URL;
 
@@ -19,41 +20,58 @@ public class ErrorDialog {
     private Label errorMessage;
     @FXML
     private Button closeButton;
-    @FXML
-    private DialogPane dialogPane;
 
-    private Dialog<Void> dialog;
+    private Stage stage;
+    private double xOffset = 0;
+    private double yOffset = 0;
 
     public ErrorDialog(String title, String message) {
         try {
             URL fxmlPath = getClass().getClassLoader().getResource("view/ErrorDialog.fxml");
-            if (fxmlPath == null) {
-                throw new IOException("FXML file is not found: view/ErrorDialog.fxml");
-            }
-
             FXMLLoader loader = new FXMLLoader(fxmlPath);
+
             loader.setController(this);
-            dialogPane = loader.load();
-            dialog = new Dialog<>();
-            dialog.setDialogPane(dialogPane);
+            Pane root = loader.load();
+
+            stage = new Stage();
+            stage.initStyle(StageStyle.UNDECORATED);
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initStyle(StageStyle.TRANSPARENT);
+            Scene scene = new Scene(root);
+            scene.setFill(null);
+            stage.setScene(scene);
 
             errorTitle.setText(title);
             errorMessage.setText(message);
+            if (closeButton != null) {
+                closeButton.setOnAction(event -> closeDialog());
+            }
 
-            closeButton.setOnAction(event -> closeDialog());
+            root.setOnMousePressed(event -> {
+                xOffset = event.getSceneX();
+                yOffset = event.getSceneY();
+            });
+
+            root.setOnMouseDragged(event -> {
+                stage.setX(event.getScreenX() - xOffset);
+                stage.setY(event.getScreenY() - yOffset);
+            });
 
         } catch (IOException e) {
-            throw new RuntimeException("Open DialogWindow Error: " + e.getMessage(), e);
+            throw new RuntimeException("Ошибка открытия окна ошибки: " + e.getMessage(), e);
         }
     }
 
     @FXML
     private void closeDialog() {
-        Stage stage = (Stage) dialogPane.getScene().getWindow();
-        stage.close();
+        if (stage != null) {
+            stage.close();
+        }
     }
 
     public void show() {
-        dialog.showAndWait();
+        if (stage != null) {
+            stage.showAndWait();
+        }
     }
 }

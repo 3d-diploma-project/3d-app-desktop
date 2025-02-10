@@ -1,3 +1,8 @@
+
+#rootPane {
+    -fx-background-color: transparent;
+}
+
 .dialog-pane {
     -fx-background-color: #FFECEC;
     -fx-border-color: #FF4D4D;
