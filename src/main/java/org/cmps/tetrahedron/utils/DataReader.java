@@ -50,8 +50,11 @@ public class DataReader {
             }
 
             return coordinates;
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
+        } catch (FileNotFoundException | NumberFormatException e) {
+            throw new ModelValidationException("""
+                            Помилка під час зчитування матриці координатів.\s
+                            
+                            Перевірте дані та спробуйте знову""");
         }
     }
 
