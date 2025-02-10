@@ -73,30 +73,28 @@ public class VertexInfoController {
      * TODO: Make this search more efficient.
      */
     private String buildNodeInfo(Vector3f worldCoord) {
-        SortedSet<Pair<Integer, Double>> sortedSet = new TreeSet<>(Comparator.comparing(Pair::getValue));
+        int closestNode = 0;
+        double distanceToClosestNode = Double.MAX_VALUE;
 
         for (Map.Entry<Integer, float[]> entry : modelController.getVertices().entrySet()) {
             float[] vertex = entry.getValue();
-            float[] originalVertex = moveToOriginal(vertex);
+            double distanceSqr = Math.pow(vertex[0] - worldCoord.x, 2)
+                    + Math.pow(vertex[1] - worldCoord.y, 2)
+                    + Math.pow(vertex[2] - worldCoord.z, 2);
 
-            double distanceSqr = Math.pow(originalVertex[0] - worldCoord.x, 2)
-                    + Math.pow(originalVertex[1] - worldCoord.y, 2)
-                    + Math.pow(originalVertex[2] - worldCoord.z, 2);
-            sortedSet.add(new Pair<>(entry.getKey(), distanceSqr));
-
-            if (sortedSet.size() > 4) {
-                sortedSet.remove(sortedSet.last());
+            if (distanceSqr < distanceToClosestNode) {
+                closestNode = entry.getKey();
+                distanceToClosestNode = distanceSqr;
             }
         }
 
-        Pair<Integer, Double> closestNode = sortedSet.first();
-        float[] vertex = moveToOriginal(modelController.getVertices().get(closestNode.getKey()));
+        float[] vertex = moveToOriginal(modelController.getVertices().get(closestNode));
 
-        return "Closest node " + closestNode.getKey() + "-> X: " + vertex[0]
+        return "Closest node " + closestNode + "-> X: " + vertex[0]
                 + ", Y: " + vertex[1] + ", Z: " + vertex[2];
     }
 
-    public float[] moveToOriginal(float[] vertex) {
+    private float[] moveToOriginal(float[] vertex) {
         Vector3f center = modelController.getModel().getCenter();
         return new float[]{
                 vertex[0] + center.x,

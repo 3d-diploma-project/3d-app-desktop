@@ -69,8 +69,7 @@ public class ModelController {
     }
 
     private void centerModel() {
-        Vector3f center = model.getModelCenter();
-        model.setCenter(center);
+        Vector3f center = model.getCenter();
 
         Map<Integer, float[]> vertices = getVertices();
         for (Map.Entry<Integer, float[]> entry : vertices.entrySet()) {
