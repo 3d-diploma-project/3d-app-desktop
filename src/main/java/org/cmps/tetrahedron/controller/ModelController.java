@@ -70,9 +70,9 @@ public class ModelController {
 
     private void centerModel() {
         Vector3f center = model.getModelCenter();
-        model.setCenter(center); // Сохранение центра модели
+        model.setCenter(center);
 
-        Map<Integer, float[]> vertices = model.getVertices();
+        Map<Integer, float[]> vertices = getVertices();
         for (Map.Entry<Integer, float[]> entry : vertices.entrySet()) {
             float[] vertex = entry.getValue();
             vertex[0] -= center.x;
