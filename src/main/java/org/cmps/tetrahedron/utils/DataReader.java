@@ -57,7 +57,7 @@ public class DataReader {
                 String[] elements = fid.nextLine().trim().split("\\s+");
 
                 if (elements.length < 4 || elements.length > 5) {
-                    throw new IllegalArgumentException("""
+                    throw new ModelValidationException("""
                             Матриця індексів використовує неіснуючі координати.\s
 
                             Перевірте дані та спробуйте знову""");
@@ -84,6 +84,8 @@ public class DataReader {
 
             return faces;
         } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (ModelValidationException e) {
             throw new RuntimeException(e);
         }
     }
