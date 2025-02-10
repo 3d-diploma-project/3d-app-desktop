@@ -59,7 +59,7 @@ public class DataReader {
                 if (elements.length < 4 || elements.length > 5) {
                     throw new ModelValidationException("""
                             Матриця індексів використовує неіснуючі координати.\s
-
+                            
                             Перевірте дані та спробуйте знову""");
                 }
 
@@ -83,8 +83,11 @@ public class DataReader {
             }
 
             return faces;
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
+        } catch (FileNotFoundException | NumberFormatException e) {
+            throw new ModelValidationException("""
+                            Помилка під час зчитування матриці індексів.\s
+                            
+                            Перевірте дані та спробуйте знову""");
         }
     }
 
