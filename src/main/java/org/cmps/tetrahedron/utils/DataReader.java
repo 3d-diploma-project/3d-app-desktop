@@ -1,7 +1,6 @@
 package org.cmps.tetrahedron.utils;
 
 import org.cmps.tetrahedron.model.Stress;
-import org.cmps.tetrahedron.view.ErrorDialog;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -48,7 +47,8 @@ public class DataReader {
     }
 
     public static List<float[][]> readIndexesAndConvertToFaces(File indicesMatrix,
-                                                               Map<Integer, float[]> verticesCoordinates) {
+                                                               Map<Integer, float[]> verticesCoordinates)
+            throws ModelValidationException {
         Locale.setDefault(US);
 
         try (Scanner fid = new Scanner(indicesMatrix)) {
@@ -84,8 +84,6 @@ public class DataReader {
 
             return faces;
         } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        } catch (ModelValidationException e) {
             throw new RuntimeException(e);
         }
     }

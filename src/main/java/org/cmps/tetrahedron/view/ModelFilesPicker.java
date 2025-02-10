@@ -4,23 +4,16 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Dialog;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import lombok.Setter;
-import org.cmps.tetrahedron.Tetrahedron;
 import org.cmps.tetrahedron.controller.ModelController;
-import org.cmps.tetrahedron.utils.DataReader;
+import org.cmps.tetrahedron.utils.ModelValidationException;
 import org.cmps.tetrahedron.utils.ResourceReader;
 
-import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URL;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Objects;
 
 public class ModelFilesPicker {
 
@@ -69,7 +62,7 @@ public class ModelFilesPicker {
 
         try {
             modelController.initModelData(nodesController.getFile(), indicesController.getFile());
-        } catch (Exception e) {
+        } catch (ModelValidationException e) {
             new ErrorDialog("Помилка!", e.getMessage()).show();
             return;
         }
