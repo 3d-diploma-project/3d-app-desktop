@@ -25,7 +25,6 @@ import java.util.Objects;
 public class ModelFilesPicker {
 
     private final ModelController modelController = ModelController.getInstance();
-    private boolean errorDialogShown = false;
 
     @FXML
     private FilePicker nodesController;
@@ -62,18 +61,18 @@ public class ModelFilesPicker {
 
     public void onClick() {
         boolean nodesValidation = validateFileExistence(nodesController);
-        boolean indicesValidation = validateFileExistence(indicesController) && validateIndicesFile(indicesController.getFile());
-
+        boolean indicesValidation = validateFileExistence(indicesController);
         if (!nodesValidation || !indicesValidation) {
-            if (!errorDialogShown) {
-                errorDialogShown = true;
-                new ErrorDialog("Помилка!", "Неможливо зчитати матрицю індексів та таблицю координат.\n\nПеревірте дані та спробуйте знову!").show();
-                errorDialogShown = false;
-            }
+            new ErrorDialog("Помилка!", "Неможливо зчитати матрицю індексів та таблицю координат.\n\nПеревірте дані та спробуйте знову!").show();
             return;
         }
 
-        modelController.initModelData(nodesController.getFile(), indicesController.getFile());
+        try {
+            modelController.initModelData(nodesController.getFile(), indicesController.getFile());
+        } catch (Exception e) {
+            new ErrorDialog("Помилка!", e.getMessage()).show();
+            return;
+        }
 
         if (dialog != null) {
             dialog.close();
@@ -92,28 +91,5 @@ public class ModelFilesPicker {
         }
 
         return true;
-    }
-
-    private boolean validateIndicesFile(File indicesFile) {
-        try {
-            List<float[][]> faces = DataReader.readIndexesAndConvertToFaces(indicesFile, new HashMap<>());
-            if (faces.isEmpty()) {
-                showError("Indices file is empty.");
-                return false;
-            }
-        } catch (Exception e) {
-            new ErrorDialog("Помилка!", """
-                            Матриця індексів використовує неіснуючі координати.\s
-
-                            Перевірте дані та спробуйте знову""").show();
-            errorDialogShown = true;
-            return false;
-        }
-
-        return true;
-    }
-
-    private void showError(String message) {
-        System.err.println(message);
     }
 }

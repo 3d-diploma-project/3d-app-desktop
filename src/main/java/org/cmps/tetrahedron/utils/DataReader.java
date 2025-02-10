@@ -57,7 +57,10 @@ public class DataReader {
                 String[] elements = fid.nextLine().trim().split("\\s+");
 
                 if (elements.length < 4 || elements.length > 5) {
-                    throw new IllegalArgumentException("Expected 4 or " + FACE_WITH_INDICES + " numbers, got " + elements.length);
+                    throw new IllegalArgumentException("""
+                            Матриця індексів використовує неіснуючі координати.\s
+
+                            Перевірте дані та спробуйте знову""");
                 }
 
                 float[][] tetrahedron = new float[4][];
