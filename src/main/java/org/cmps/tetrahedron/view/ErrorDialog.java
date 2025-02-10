@@ -28,9 +28,6 @@ public class ErrorDialog {
     public ErrorDialog(String title, String message) {
         try {
             URL fxmlPath = getClass().getClassLoader().getResource("view/ErrorDialog.fxml");
-            if (fxmlPath == null) {
-                throw new IOException("FXML файл не найден: view/ErrorDialog.fxml");
-            }
 
             FXMLLoader loader = new FXMLLoader(fxmlPath);
             loader.setController(this);
