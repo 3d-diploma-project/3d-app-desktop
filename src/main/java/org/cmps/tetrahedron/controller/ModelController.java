@@ -6,6 +6,7 @@ import org.cmps.tetrahedron.model.Model;
 import org.cmps.tetrahedron.model.Stress;
 import org.cmps.tetrahedron.utils.DataReader;
 import org.cmps.tetrahedron.utils.LegendUtils;
+import org.joml.Vector3f;
 
 import java.io.File;
 import java.util.*;
@@ -27,19 +28,21 @@ public class ModelController {
 
     private ModelController() {
         model = Model.builder()
-                     .vertices(new HashMap<>())
-                     .faces(new ArrayList<>())
-                     .build();
+                .vertices(new HashMap<>())
+                .faces(new ArrayList<>())
+                .build();
     }
 
     public void initModelData(File nodes, File indices) {
         Map<Integer, float[]> vertices = DataReader.readVertices(nodes);
 
         model = Model.builder()
-                     .vertices(vertices)
-                     .faces(DataReader.readIndexesAndConvertToFaces(indices, vertices))
-                     .build();
+                .vertices(vertices)
+                .faces(DataReader.readIndexesAndConvertToFaces(indices, vertices))
+                .build();
         modelReady = true;
+
+        centerModel();
     }
 
     public List<float[][]> getFaces() {
@@ -58,10 +61,22 @@ public class ModelController {
 
         TreeMap<Float, Integer> legend = LegendUtils.buildLegend(stress.getMinStress(), stress.getMaxStress());
         stress.setColors(stress.getStress()
-                               .stream()
-                               .map(value -> COLORS.get(legend.get(legend.floorKey(value))))
-                               .toList());
+                .stream()
+                .map(value -> COLORS.get(legend.get(legend.floorKey(value))))
+                .toList());
 
         stressDataLoaded = true;
+    }
+
+    private void centerModel() {
+        Vector3f center = model.getCenter();
+
+        Map<Integer, float[]> vertices = getVertices();
+        for (Map.Entry<Integer, float[]> entry : vertices.entrySet()) {
+            float[] vertex = entry.getValue();
+            vertex[0] -= center.x;
+            vertex[1] -= center.y;
+            vertex[2] -= center.z;
+        }
     }
 }

@@ -7,16 +7,22 @@ import org.joml.Vector3f;
 import java.io.File;
 import java.util.*;
 
-@Builder
 @NoArgsConstructor
-@AllArgsConstructor
 @Data
 public class Model {
 
     private Map<Integer, float[]> vertices;
     private List<float[][]> faces;
+    private Vector3f center;
 
-    public Vector3f getModelCenter() {
+    @Builder
+    private Model(Map<Integer, float[]> vertices, List<float[][]> faces) {
+        this.vertices = vertices;
+        this.faces = faces;
+        this.center = calculateModelCenter();
+    }
+
+    private Vector3f calculateModelCenter() {
         if (vertices == null || vertices.isEmpty()) {
             System.err.print("Model has no vertices");
         }
