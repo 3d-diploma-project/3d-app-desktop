@@ -6,7 +6,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
+import org.cmps.tetrahedron.utils.ResourceReader;
 
 import java.io.IOException;
 import java.net.URL;
@@ -37,8 +40,13 @@ public class ErrorDialog {
             dialog = new Dialog<>();
             dialog.setDialogPane(dialogPane);
 
+            dialog.setTitle("Error");
             errorTitle.setText(title);
             errorMessage.setText(message);
+
+            Stage stage = (Stage) dialogPane.getScene().getWindow();
+            Image logoImage = new Image(getClass().getResource("/logo.png").toString());
+            stage.getIcons().add(logoImage);
 
             closeButton.setOnAction(event -> closeDialog());
 
