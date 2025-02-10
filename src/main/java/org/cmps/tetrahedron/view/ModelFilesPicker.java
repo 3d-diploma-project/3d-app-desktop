@@ -9,7 +9,7 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import lombok.Setter;
 import org.cmps.tetrahedron.controller.ModelController;
-import org.cmps.tetrahedron.utils.ModelValidationException;
+import org.cmps.tetrahedron.exception.ModelValidationException;
 import org.cmps.tetrahedron.utils.ResourceReader;
 
 import java.io.IOException;

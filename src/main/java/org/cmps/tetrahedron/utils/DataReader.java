@@ -1,5 +1,6 @@
 package org.cmps.tetrahedron.utils;
 
+import org.cmps.tetrahedron.exception.ModelValidationException;
 import org.cmps.tetrahedron.model.Stress;
 
 import java.io.File;

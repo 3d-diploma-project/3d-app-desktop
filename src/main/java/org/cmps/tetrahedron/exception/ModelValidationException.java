@@ -1,4 +1,4 @@
-package org.cmps.tetrahedron.utils;
+package org.cmps.tetrahedron.exception;
 
 public class ModelValidationException extends Exception {
     public ModelValidationException(String message) {
