@@ -20,6 +20,8 @@ public class ModelController {
     private static ModelController instance = new ModelController();
 
     private Model model;
+    @Getter
+    private Map<Integer, float[]> originalVertices;
     @Setter
     private boolean modelReady = false;
     private Stress stress;
@@ -31,10 +33,16 @@ public class ModelController {
                      .vertices(new HashMap<>())
                      .faces(new ArrayList<>())
                      .build();
+        originalVertices = new HashMap<>();
     }
 
     public void initModelData(File nodes, File indices) {
         Map<Integer, float[]> vertices = DataReader.readVertices(nodes);
+
+        originalVertices.clear();
+        for (Map.Entry<Integer, float[]> entry : vertices.entrySet()) {
+            originalVertices.put(entry.getKey(), entry.getValue().clone());
+        }
 
         model = Model.builder()
                      .vertices(vertices)

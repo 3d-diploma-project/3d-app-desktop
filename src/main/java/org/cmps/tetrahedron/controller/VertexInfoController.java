@@ -75,8 +75,9 @@ public class VertexInfoController {
     private String buildNodeInfo(Vector3f worldCoord) {
         SortedSet<Pair<Integer, Double>> sortedSet = new TreeSet<>(Comparator.comparing(Pair::getValue));
 
-        for (Map.Entry<Integer, float[]> entry : modelController.getVertices().entrySet()) {
-            float[] vertex = entry.getValue();;
+        for (Map.Entry<Integer, float[]> entry : modelController.getOriginalVertices().entrySet()) {
+            float[] vertex = entry.getValue();
+
             double xVertex = vertex[0];
             double yVertex = vertex[1];
             double zVertex = vertex[2];
@@ -92,8 +93,9 @@ public class VertexInfoController {
         }
 
         Pair<Integer, Double> closestNode = sortedSet.first();
-        float[] vertex = modelController.getVertices().get(closestNode.getKey());
+        float[] vertex = modelController.getOriginalVertices().get(closestNode.getKey());
 
         return "Closest node " + closestNode.getKey() + "-> X: " + vertex[0] + ", Y: " + vertex[1] + ", Z: " + vertex[2];
     }
+
 }
