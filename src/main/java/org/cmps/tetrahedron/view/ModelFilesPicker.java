@@ -10,16 +10,17 @@ import javafx.stage.WindowEvent;
 import lombok.Setter;
 import org.cmps.tetrahedron.controller.ModelController;
 import org.cmps.tetrahedron.exception.ModelValidationException;
+import org.cmps.tetrahedron.utils.DataReader;
 import org.cmps.tetrahedron.utils.ResourceReader;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Map;
 
 public class ModelFilesPicker {
 
     private final ModelController modelController = ModelController.getInstance();
-    private boolean errorDialogShown = false;
 
     @FXML
     private FilePicker nodesController;
@@ -55,7 +56,7 @@ public class ModelFilesPicker {
     }
 
     public void onClick() {
-        boolean nodesValidation = validateFileExistence(nodesController) && validateVerticesFile(nodesController.getFile());
+        boolean nodesValidation = validateFileExistence(nodesController);
         boolean indicesValidation = validateFileExistence(indicesController);
         if (!nodesValidation || !indicesValidation) {
             new ErrorDialog("Помилка!", "Неможливо зчитати матрицю індексів та таблицю координат.\n\nПеревірте дані та спробуйте знову!").show();
@@ -88,26 +89,5 @@ public class ModelFilesPicker {
         }
 
         return true;
-    }
-
-    private boolean validateVerticesFile(File verticesFile) {
-        try {
-            Map<Integer, float[]> vertices = DataReader.readVertices(verticesFile);
-            if (vertices.isEmpty()) {
-                showError("Vertices file is empty.");
-                return false;
-            }
-        } catch (Exception e) {
-            // there should be another text here
-            new ErrorDialog("Помилка!", "Неможливо зчитати матрицю індексів та таблицю координат.\n\nПеревірте дані та спробуйте знову!").show();
-            errorDialogShown = true;
-            return false;
-        }
-
-        return true;
-    }
-
-    private void showError(String message) {
-        System.err.println(message);
     }
 }

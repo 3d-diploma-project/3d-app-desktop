@@ -14,7 +14,8 @@ public class DataReader {
     private static final int VERTICES_WITH_INDICES = 4;
     private static final int FACE_WITH_INDICES = 5;
 
-    public static Map<Integer, float[]> readVertices(File coordinatesTableFile) {
+    public static Map<Integer, float[]> readVertices(File coordinatesTableFile)
+            throws ModelValidationException {
         Locale.setDefault(US);
 
         int i = 1;
@@ -26,7 +27,10 @@ public class DataReader {
                 int index, startIndex;
 
                 if (elements.length < 3 || elements.length > 4) {
-                    throw new IllegalArgumentException("Expected 3 or " + VERTICES_WITH_INDICES + " space-separated values, got " + elements.length);
+                    throw new ModelValidationException("""
+                            Для кожної вершини має бути вказано 3 координати.\s
+                                                             
+                            Перевірте дані та спробуйте знову""");
                 }
 
                 if (elements.length == VERTICES_WITH_INDICES) {
