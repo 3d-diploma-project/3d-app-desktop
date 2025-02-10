@@ -58,8 +58,8 @@ public class DataReader {
 
                 if (elements.length < 4 || elements.length > 5) {
                     throw new ModelValidationException("""
-                            Матриця індексів використовує неіснуючі координати.\s
-                            
+                            Для кожного елементу має бути вказано 4 індекси координат.\s
+                                                             
                             Перевірте дані та спробуйте знову""");
                 }
 
