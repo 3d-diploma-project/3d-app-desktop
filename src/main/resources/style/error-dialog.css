@@ -1,0 +1,57 @@
+#rootPane {
+    -fx-background-color: transparent;
+}
+
+.dialog-pane {
+    -fx-background-color: #FFECEC;
+    -fx-border-color: #FF4D4D;
+    -fx-border-width: 2px;
+    -fx-border-radius: 25px;
+    -fx-background-radius: 25px;
+    -fx-padding: 20px 18px;
+}
+
+.error-title {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #000000;
+}
+
+.error-message {
+    -fx-font-size: 16px;
+    -fx-text-fill: #000000;
+    -fx-text-alignment: center;
+    -fx-wrap-text: true;
+}
+
+.error-button {
+    -fx-background-color: #000000;
+    -fx-text-fill: #FFFFFF;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-padding: 8px 20px;
+    -fx-background-radius: 20px;
+    -fx-border-radius: 20px;
+    -fx-cursor: hand;
+}
+
+.error-button:hover {
+    -fx-background-color: #333333;
+}
+
+.dialog-pane .button-bar {
+    -fx-background-color: transparent;
+}
+
+.dialog-pane .button-bar .button {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+.dialog-pane .header-panel {
+    -fx-background-color: transparent;
+}
+
+.dialog-pane .content {
+    -fx-background-color: transparent;
+}

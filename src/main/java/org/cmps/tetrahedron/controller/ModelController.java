@@ -6,6 +6,7 @@ import org.cmps.tetrahedron.model.Model;
 import org.cmps.tetrahedron.model.Stress;
 import org.cmps.tetrahedron.utils.DataReader;
 import org.cmps.tetrahedron.utils.LegendUtils;
+import org.cmps.tetrahedron.exception.ModelValidationException;
 import org.joml.Vector3f;
 
 import java.io.File;
@@ -33,7 +34,7 @@ public class ModelController {
                 .build();
     }
 
-    public void initModelData(File nodes, File indices) {
+    public void initModelData(File nodes, File indices) throws ModelValidationException {
         Map<Integer, float[]> vertices = DataReader.readVertices(nodes);
 
         model = Model.builder()
