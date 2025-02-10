@@ -20,8 +20,6 @@ public class ModelController {
     private static ModelController instance = new ModelController();
 
     private Model model;
-    @Getter
-    private Map<Integer, float[]> originalVertices;
     @Setter
     private boolean modelReady = false;
     private Stress stress;
@@ -30,24 +28,18 @@ public class ModelController {
 
     private ModelController() {
         model = Model.builder()
-                     .vertices(new HashMap<>())
-                     .faces(new ArrayList<>())
-                     .build();
-        originalVertices = new HashMap<>();
+                .vertices(new HashMap<>())
+                .faces(new ArrayList<>())
+                .build();
     }
 
     public void initModelData(File nodes, File indices) {
         Map<Integer, float[]> vertices = DataReader.readVertices(nodes);
 
-        originalVertices.clear();
-        for (Map.Entry<Integer, float[]> entry : vertices.entrySet()) {
-            originalVertices.put(entry.getKey(), entry.getValue().clone());
-        }
-
         model = Model.builder()
-                     .vertices(vertices)
-                     .faces(DataReader.readIndexesAndConvertToFaces(indices, vertices))
-                     .build();
+                .vertices(vertices)
+                .faces(DataReader.readIndexesAndConvertToFaces(indices, vertices))
+                .build();
         modelReady = true;
 
         centerModel();
@@ -69,17 +61,18 @@ public class ModelController {
 
         TreeMap<Float, Integer> legend = LegendUtils.buildLegend(stress.getMinStress(), stress.getMaxStress());
         stress.setColors(stress.getStress()
-                               .stream()
-                               .map(value -> COLORS.get(legend.get(legend.floorKey(value))))
-                               .toList());
+                .stream()
+                .map(value -> COLORS.get(legend.get(legend.floorKey(value))))
+                .toList());
 
         stressDataLoaded = true;
     }
 
     private void centerModel() {
         Vector3f center = model.getModelCenter();
+        model.setCenter(center); // Сохранение центра модели
 
-        Map<Integer, float[]> vertices = ModelController.getInstance().getVertices();
+        Map<Integer, float[]> vertices = model.getVertices();
         for (Map.Entry<Integer, float[]> entry : vertices.entrySet()) {
             float[] vertex = entry.getValue();
             vertex[0] -= center.x;

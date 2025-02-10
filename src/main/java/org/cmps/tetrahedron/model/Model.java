@@ -15,6 +15,7 @@ public class Model {
 
     private Map<Integer, float[]> vertices;
     private List<float[][]> faces;
+    private Vector3f center;
 
     public Vector3f getModelCenter() {
         if (vertices == null || vertices.isEmpty()) {
