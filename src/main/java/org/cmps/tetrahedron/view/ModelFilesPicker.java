@@ -81,9 +81,7 @@ public class ModelFilesPicker {
     }
 
     private boolean validateFileExistence(FilePicker filePicker) {
-        File file = filePicker.getFile();
-
-        if (file == null) {
+        if (filePicker.getFile() == null) {
             filePicker.showNotSelectedFileError();
             return false;
         }

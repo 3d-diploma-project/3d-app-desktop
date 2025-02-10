@@ -52,7 +52,7 @@ public class DataReader {
             return coordinates;
         } catch (FileNotFoundException | NumberFormatException e) {
             throw new ModelValidationException("""
-                            Помилка під час зчитування матриці координатів.\s
+                            Помилка під час зчитування матриці координат.\s
                             
                             Перевірте дані та спробуйте знову""");
         }
