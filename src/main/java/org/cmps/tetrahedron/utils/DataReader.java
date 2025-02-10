@@ -14,7 +14,8 @@ public class DataReader {
     private static final int VERTICES_WITH_INDICES = 4;
     private static final int FACE_WITH_INDICES = 5;
 
-    public static Map<Integer, float[]> readVertices(File coordinatesTableFile) {
+    public static Map<Integer, float[]> readVertices(File coordinatesTableFile)
+            throws ModelValidationException {
         Locale.setDefault(US);
 
         int i = 1;
@@ -24,6 +25,13 @@ public class DataReader {
             while (fid.hasNextLine()) {
                 String[] elements = fid.nextLine().trim().split("\\s+");
                 int index, startIndex;
+
+                if (elements.length < 3 || elements.length > 4) {
+                    throw new ModelValidationException("""
+                            Для кожної вершини має бути вказано 3 координати.\s
+                                                             
+                            Перевірте дані та спробуйте знову""");
+                }
 
                 if (elements.length == VERTICES_WITH_INDICES) {
                     index = Integer.parseInt(elements[0]);
@@ -42,8 +50,11 @@ public class DataReader {
             }
 
             return coordinates;
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
+        } catch (FileNotFoundException | NumberFormatException e) {
+            throw new ModelValidationException("""
+                            Помилка під час зчитування матриці координат.\s
+                            
+                            Перевірте дані та спробуйте знову""");
         }
     }
 
@@ -68,7 +79,7 @@ public class DataReader {
                 int startIndex;
 
                 startIndex = elements.length == FACE_WITH_INDICES ? 1 : 0;
-                for (int j = startIndex; j < elements.length; j++){
+                for (int j = startIndex; j < elements.length; j++) {
                     tetrahedron[j - startIndex] = verticesCoordinates.get(Integer.parseInt(elements[j]));
                 }
 

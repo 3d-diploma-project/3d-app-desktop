@@ -10,10 +10,13 @@ import javafx.stage.WindowEvent;
 import lombok.Setter;
 import org.cmps.tetrahedron.controller.ModelController;
 import org.cmps.tetrahedron.exception.ModelValidationException;
+import org.cmps.tetrahedron.utils.DataReader;
 import org.cmps.tetrahedron.utils.ResourceReader;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Map;
 
 public class ModelFilesPicker {
 

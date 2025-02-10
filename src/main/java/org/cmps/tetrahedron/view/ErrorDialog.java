@@ -28,8 +28,8 @@ public class ErrorDialog {
     public ErrorDialog(String title, String message) {
         try {
             URL fxmlPath = getClass().getClassLoader().getResource("view/ErrorDialog.fxml");
-
             FXMLLoader loader = new FXMLLoader(fxmlPath);
+
             loader.setController(this);
             Pane root = loader.load();
 
@@ -43,7 +43,6 @@ public class ErrorDialog {
 
             errorTitle.setText(title);
             errorMessage.setText(message);
-
             if (closeButton != null) {
                 closeButton.setOnAction(event -> closeDialog());
             }
