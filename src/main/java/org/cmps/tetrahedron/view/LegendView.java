@@ -17,12 +17,12 @@ import java.util.*;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class StressView extends HBox {
+public class LegendView extends HBox {
 
     private final int colorBoxSizeX = 80;
     private final int colorBoxSizeY = 25;
 
-    public StressView() {
+    public LegendView() {
         Map<Integer, float[]> colors = LegendUtils.COLORS;
         List<String> ranges = generateRangeValues();
 

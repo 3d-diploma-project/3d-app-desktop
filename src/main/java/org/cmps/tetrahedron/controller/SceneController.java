@@ -66,7 +66,7 @@ public class SceneController {
 
     public void addStressView() {
         if (stressView == null) {
-            stressView = new StressView();
+            stressView = new LegendView();
         }
     }
 }
