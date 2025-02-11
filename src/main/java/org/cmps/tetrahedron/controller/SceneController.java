@@ -19,7 +19,9 @@ public class SceneController {
     @Getter
     private static final SceneController instance = new SceneController();
     private VBox root;
-    private VBox stressView;
+    private HBox stressView;
+    @Getter
+    private AnchorPane anchorPane;
 
     private final Scene scene;
 
@@ -43,13 +45,14 @@ public class SceneController {
         instrumentSidebar.getStyleClass().add("instrument-sidebar");
 
         VBox rightToolbar = new RightToolbar();
-        AnchorPane anchorPane = new AnchorPane(instrumentSidebar, rightToolbar);
+        anchorPane = new AnchorPane(instrumentSidebar, rightToolbar);
         anchorPane.getStyleClass().add("main");
+        VBox.setVgrow(anchorPane, Priority.ALWAYS);
 
-        AnchorPane.setLeftAnchor(instrumentSidebar, 30d);
-        AnchorPane.setTopAnchor(instrumentSidebar, 50d);
+        AnchorPane.setLeftAnchor(instrumentSidebar, 10d);
+        AnchorPane.setTopAnchor(instrumentSidebar, 75d);
         AnchorPane.setRightAnchor(rightToolbar, 20d);
-        AnchorPane.setTopAnchor(rightToolbar, 50d);
+        AnchorPane.setTopAnchor(rightToolbar, 75d);
         root.getChildren().addAll(navbar, anchorPane);
 
         InfoPanel infoPanel = InfoPanel.getInstance();
@@ -64,7 +67,6 @@ public class SceneController {
     public void addStressView() {
         if (stressView == null) {
             stressView = new StressView();
-            root.getChildren().add(1, stressView);
         }
     }
 }

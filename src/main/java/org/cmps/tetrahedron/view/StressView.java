@@ -2,9 +2,11 @@ package org.cmps.tetrahedron.view;
 
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.text.FontWeight;
 import org.cmps.tetrahedron.controller.ModelController;
+import org.cmps.tetrahedron.controller.SceneController;
 import org.cmps.tetrahedron.model.Stress;
 import org.cmps.tetrahedron.utils.FontUtils;
 import org.cmps.tetrahedron.utils.LegendUtils;
@@ -15,51 +17,75 @@ import java.util.*;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class StressView extends VBox {
+public class StressView extends HBox {
 
-    private final boolean isColorArrayLarge = LegendUtils.getCOLOR_ARRAY_SIZE() > 11;
+    private final int colorBoxSizeX = 80;
+    private final int colorBoxSizeY = 25;
 
     public StressView() {
-
         Map<Integer, float[]> colors = LegendUtils.COLORS;
-        List<String> ranges = generateRange();
+        List<String> ranges = generateRangeValues();
 
-        HBox allColorBoxes = new HBox();
+        AnchorPane anchorPane = SceneController.getInstance().getAnchorPane();
+        anchorPane.getChildren().add(this);
+        AnchorPane.setTopAnchor(this, 0.0);
+        AnchorPane.setBottomAnchor(this, 0.0);
+        AnchorPane.setLeftAnchor(this, 100d);
+
+        addColorBoxes(colors);
+        addValuesRangeBoxes(ranges);
+    }
+
+    private void addColorBoxes(Map<Integer, float[]> colors) {
+        VBox allColorBoxes = new VBox();
         allColorBoxes.setAlignment(Pos.CENTER);
-        allColorBoxes.setSpacing(2);
 
         for (Map.Entry<Integer, float[]> entry : colors.entrySet()) {
             float[] values = entry.getValue();
             VBox colorBox = new VBox();
 
-            colorBox.setMinSize(100, 20);
-            if (isColorArrayLarge) {
-                colorBox.setMinSize(80, 20);
+            colorBox.setMinSize(colorBoxSizeX, colorBoxSizeY);
+            colorBox.setStyle("-fx-background-color: " + toHex(values[0], values[1], values[2]) + ";");
+            if (entry.getKey() != colors.size() - 1) {
+                colorBox.setBorder(new Border(new BorderStroke(
+                        Color.BLACK,
+                        BorderStrokeStyle.SOLID,
+                        new CornerRadii(0),
+                        new BorderWidths(0, 0, 2, 0)
+                )));
             }
 
-            colorBox.setStyle("-fx-background-color: " + toHex(values[0], values[1], values[2]) + ";");
             allColorBoxes.getChildren().add(colorBox);
         }
         getChildren().add(allColorBoxes);
-
-        HBox allLabelBoxes = new HBox();
-        allLabelBoxes.setAlignment(Pos.CENTER);
-        allLabelBoxes.setSpacing(40);
-
-        for (String border: ranges) {
-            Label rangeValue = new Label(border);
-            rangeValue.setFont(FontUtils.getGeolocicaFont(16));
-            if (isColorArrayLarge) {
-                rangeValue.setFont(FontUtils.getGeolocicaFont(14));
-                allLabelBoxes.setSpacing(25);
-            }
-            allLabelBoxes.getChildren().add(rangeValue);
-        }
-        getChildren().add(allLabelBoxes);
-
     }
 
-    private List<String> generateRange() {
+    private void addValuesRangeBoxes(List<String> ranges) {
+        VBox allLabelBoxes = new VBox();
+        allLabelBoxes.setAlignment(Pos.CENTER);
+        allLabelBoxes.setSpacing(5.5);
+
+        for (String border: ranges) {
+            VBox labelBox = new VBox();
+            labelBox.setStyle("-fx-background-color: #FAFAFA; "
+                    + "-fx-padding: 2; "
+                    + "-fx-border-color: black; "
+                    + "-fx-border-width: 1px;");
+
+            Label rangeValue = new Label(border);
+            rangeValue.setFont(FontUtils.getGeolocicaFont(10, FontWeight.BOLD));
+
+            labelBox.getChildren().add(rangeValue);
+            allLabelBoxes.getChildren().add(labelBox);
+
+            labelBox.widthProperty().addListener((obs, oldVal, newVal) -> {
+                labelBox.setTranslateX(-(colorBoxSizeX - (colorBoxSizeX - (double) (newVal)) / 2));
+            });
+        }
+        getChildren().add(allLabelBoxes);
+    }
+
+    private List<String> generateRangeValues() {
         Stress stressModel = ModelController.getInstance().getStress();
         TreeMap<Float, Integer> legend = LegendUtils.buildLegend(stressModel.getMinStress(), stressModel.getMaxStress());
 
