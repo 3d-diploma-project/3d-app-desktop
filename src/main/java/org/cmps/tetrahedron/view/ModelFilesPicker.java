@@ -4,19 +4,19 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Dialog;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import lombok.Setter;
-import org.cmps.tetrahedron.Tetrahedron;
 import org.cmps.tetrahedron.controller.ModelController;
+import org.cmps.tetrahedron.exception.ModelValidationException;
+import org.cmps.tetrahedron.utils.DataReader;
 import org.cmps.tetrahedron.utils.ResourceReader;
 
+import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URL;
-import java.util.Objects;
+import java.util.Map;
 
 public class ModelFilesPicker {
 
@@ -58,12 +58,17 @@ public class ModelFilesPicker {
     public void onClick() {
         boolean nodesValidation = validateFileExistence(nodesController);
         boolean indicesValidation = validateFileExistence(indicesController);
-
         if (!nodesValidation || !indicesValidation) {
+            new ErrorDialog("Помилка!", "Неможливо зчитати матрицю індексів та таблицю координат.\n\nПеревірте дані та спробуйте знову!").show();
             return;
         }
 
-        modelController.initModelData(nodesController.getFile(), indicesController.getFile());
+        try {
+            modelController.initModelData(nodesController.getFile(), indicesController.getFile());
+        } catch (ModelValidationException e) {
+            new ErrorDialog("Помилка!", e.getMessage()).show();
+            return;
+        }
 
         if (dialog != null) {
             dialog.close();
