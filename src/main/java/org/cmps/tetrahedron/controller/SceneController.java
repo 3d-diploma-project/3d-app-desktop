@@ -52,6 +52,13 @@ public class SceneController {
         AnchorPane.setTopAnchor(instrumentSidebar, 75d);
         AnchorPane.setRightAnchor(rightToolbar, 20d);
         AnchorPane.setTopAnchor(rightToolbar, 75d);
+
+        LegendView legend = LegendView.getInstance();
+        anchorPane.getChildren().add(legend);
+        AnchorPane.setLeftAnchor(legend, 100d);
+        AnchorPane.setTopAnchor(legend, 0.0);
+        AnchorPane.setBottomAnchor(legend, 0.0);
+
         root.getChildren().addAll(navbar, anchorPane);
 
         InfoPanel infoPanel = InfoPanel.getInstance();

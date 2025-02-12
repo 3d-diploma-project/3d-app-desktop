@@ -29,12 +29,6 @@ public class LegendView extends HBox {
     private final int colorBoxSizeY = 25;
 
     private LegendView() {
-        AnchorPane anchorPane = SceneController.getInstance().getAnchorPane();
-        anchorPane.getChildren().add(this);
-        AnchorPane.setTopAnchor(this, 0.0);
-        AnchorPane.setBottomAnchor(this, 0.0);
-        AnchorPane.setLeftAnchor(this, 100d);
-
         getChildren().addAll(allColorBoxes, allLabelBoxes);
     }
 
