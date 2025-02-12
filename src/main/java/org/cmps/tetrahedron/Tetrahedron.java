@@ -43,7 +43,7 @@ public class Tetrahedron {
         data.minorVersion = 2;
 
         ModelCanvas canvas = new ModelCanvas(data);
-        canvas.setLocation(CanvasProperties.X_SHIFT - 10, CanvasProperties.Y_SHIFT + 30);
+        canvas.setLocation(CanvasProperties.X_SHIFT, CanvasProperties.Y_SHIFT);
 
         canvas.addMouseListener(MouseController.getInstance());
         canvas.addMouseWheelListener(MouseController.getInstance());
