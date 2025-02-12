@@ -5,6 +5,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.FontWeight;
+import lombok.Getter;
 import org.cmps.tetrahedron.controller.ModelController;
 import org.cmps.tetrahedron.controller.SceneController;
 import org.cmps.tetrahedron.model.Stress;
@@ -19,25 +20,36 @@ import java.util.TreeMap;
 
 public class LegendView extends HBox {
 
+    @Getter
+    private static final LegendView instance = new LegendView();
+    private final VBox allColorBoxes = new VBox();
+    private final VBox allLabelBoxes = new VBox();
+
     private final int colorBoxSizeX = 80;
     private final int colorBoxSizeY = 25;
 
-    public LegendView() {
-        Map<Integer, float[]> colors = LegendUtils.COLORS;
-        List<String> ranges = generateRangeValues();
-
+    private LegendView() {
         AnchorPane anchorPane = SceneController.getInstance().getAnchorPane();
         anchorPane.getChildren().add(this);
         AnchorPane.setTopAnchor(this, 0.0);
         AnchorPane.setBottomAnchor(this, 0.0);
         AnchorPane.setLeftAnchor(this, 100d);
 
+        getChildren().addAll(allColorBoxes, allLabelBoxes);
+    }
+
+    public void updateLegend() {
+        Map<Integer, float[]> colors = LegendUtils.COLORS;
+        List<String> ranges = generateRangeValues();
+
+        allColorBoxes.getChildren().clear();
+        allLabelBoxes.getChildren().clear();
+
         addColorBoxes(colors);
         addValuesRangeBoxes(ranges);
     }
 
     private void addColorBoxes(Map<Integer, float[]> colors) {
-        VBox allColorBoxes = new VBox();
         allColorBoxes.setAlignment(Pos.CENTER);
 
         for (Map.Entry<Integer, float[]> entry : colors.entrySet()) {
@@ -57,11 +69,9 @@ public class LegendView extends HBox {
 
             allColorBoxes.getChildren().add(colorBox);
         }
-        getChildren().add(allColorBoxes);
     }
 
     private void addValuesRangeBoxes(List<String> ranges) {
-        VBox allLabelBoxes = new VBox();
         allLabelBoxes.setAlignment(Pos.CENTER);
         allLabelBoxes.setSpacing(5.5);
 
@@ -82,7 +92,6 @@ public class LegendView extends HBox {
                 labelBox.setTranslateX(-(colorBoxSizeX - (colorBoxSizeX - (double) (newVal)) / 2));
             });
         }
-        getChildren().add(allLabelBoxes);
     }
 
     private List<String> generateRangeValues() {
@@ -92,11 +101,10 @@ public class LegendView extends HBox {
         List<Float> stressChunks = new ArrayList<>(legend.keySet());
         stressChunks.add(stressModel.getMaxStress());
 
-        List<String> expNotationNumbers = stressChunks.stream()
+        return stressChunks.stream()
+                .sorted(Comparator.reverseOrder())
                 .map(num -> String.format("%.2e", num))
                 .toList();
-
-        return expNotationNumbers;
     }
 
     private String toHex(float red, float green, float blue) {

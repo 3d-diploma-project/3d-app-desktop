@@ -32,7 +32,7 @@ public class RightToolbar extends VBox {
         File file = fileChooser.showOpenDialog(SceneController.getScene().getWindow());
         if (file != null) {
             ModelController.getInstance().initStress(file);
-            SceneController.getInstance().addStressView();
+            LegendView.getInstance().updateLegend();
         }
     }
 

@@ -19,7 +19,6 @@ public class SceneController {
     @Getter
     private static final SceneController instance = new SceneController();
     private VBox root;
-    private HBox stressView;
     @Getter
     private AnchorPane anchorPane;
 
@@ -62,11 +61,5 @@ public class SceneController {
 
         root.getChildren().add(absolutePane);
         return scene;
-    }
-
-    public void addStressView() {
-        if (stressView == null) {
-            stressView = new LegendView();
-        }
     }
 }
