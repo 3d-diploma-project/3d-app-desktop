@@ -70,10 +70,12 @@ public class LegendView extends HBox {
 
         for (String border: ranges) {
             VBox labelBox = new VBox();
+            labelBox.setMinSize(55, 17);
             labelBox.setStyle("-fx-background-color: #FAFAFA; "
                     + "-fx-padding: 2; "
                     + "-fx-border-color: black; "
-                    + "-fx-border-width: 1px;");
+                    + "-fx-border-width: 0.4px;"
+                    + "-fx-alignment: center;");
 
             Label rangeValue = new Label(border);
             rangeValue.setFont(FontUtils.getGeolocicaFont(10, FontWeight.BOLD));
