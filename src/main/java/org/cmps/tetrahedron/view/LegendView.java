@@ -39,9 +39,9 @@ public class LegendView extends HBox {
         getChildren().addAll(allColorBoxes, allLabelBoxes);
     }
 
-    public void updateLegend() {
+    public void updateLegend(float minValue, float maxValue) {
         Map<Integer, float[]> colors = LegendUtils.COLORS;
-        List<String> ranges = generateRangeValues();
+        List<String> ranges = generateRangeValues(minValue, maxValue);
 
         allColorBoxes.getChildren().clear();
         allLabelBoxes.getChildren().clear();
@@ -90,12 +90,11 @@ public class LegendView extends HBox {
         }
     }
 
-    private List<String> generateRangeValues() {
-        Stress stressModel = ModelController.getInstance().getStress();
-        TreeMap<Float, Integer> legend = LegendUtils.buildLegend(stressModel.getMinStress(), stressModel.getMaxStress());
+    private List<String> generateRangeValues(float minValue, float maxValue) {
+        TreeMap<Float, Integer> legend = LegendUtils.buildLegend(minValue, maxValue);
 
         List<Float> stressChunks = new ArrayList<>(legend.keySet());
-        stressChunks.add(stressModel.getMaxStress());
+        stressChunks.add(maxValue);
 
         return stressChunks.stream()
                 .sorted(Comparator.reverseOrder())
