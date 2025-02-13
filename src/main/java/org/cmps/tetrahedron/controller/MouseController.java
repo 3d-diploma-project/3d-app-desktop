@@ -12,6 +12,7 @@ public class MouseController extends MouseAdapter {
     @Getter
     private static final MouseController instance = new MouseController();
 
+    @Getter
     private float zoomFactor = 1.0f;
     private double lastMouseX = 0;
     private double lastMouseY = 0;
@@ -53,10 +54,6 @@ public class MouseController extends MouseAdapter {
         }
         zoomFactor += (float) scrollEvent.getPreciseWheelRotation() / 50;
         zoomFactor = Math.max(1f, Math.min(zoomFactor, 500.0f));
-    }
-
-    public float getZoomFactor() {
-        return zoomFactor;
     }
 
     public float getY() {

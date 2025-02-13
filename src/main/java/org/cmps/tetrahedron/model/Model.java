@@ -1,10 +1,8 @@
 package org.cmps.tetrahedron.model;
 
 import lombok.*;
-import org.cmps.tetrahedron.utils.DataReader;
 import org.joml.Vector3f;
 
-import java.io.File;
 import java.util.*;
 
 @Getter
