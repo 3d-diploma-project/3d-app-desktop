@@ -1,11 +1,9 @@
 package org.cmps.tetrahedron.controller;
 
 import javafx.scene.layout.*;
-import org.cmps.tetrahedron.view.InfoPanel;
-import org.cmps.tetrahedron.view.InstrumentsSidebar;
-import org.cmps.tetrahedron.view.Navbar;
+import org.cmps.tetrahedron.view.*;
+import lombok.Getter;
 import javafx.scene.Scene;
-import org.cmps.tetrahedron.view.RightToolbar;
 import org.cmps.tetrahedron.config.WindowProperties;
 
 import java.util.Objects;
@@ -33,11 +31,10 @@ public class SceneController {
     private Scene buildScene() {
         VBox root = new VBox();
         root.getStyleClass().add("model-view-page");
-
         Scene scene = new Scene(root, WindowProperties.getLogicalWidth(), WindowProperties.getLogicalHeight());
         scene.getStylesheets().add(Objects.requireNonNull(SceneController.class.getResource("/styles.css")).toExternalForm());
 
-        HBox navbar = new Navbar(scene);
+        HBox navbar = new Navbar();
 
         VBox instrumentSidebar = new InstrumentsSidebar();
         instrumentSidebar.getStyleClass().add("instrument-sidebar");
@@ -45,10 +42,19 @@ public class SceneController {
         VBox rightToolbar = new RightToolbar();
         AnchorPane anchorPane = new AnchorPane(instrumentSidebar, rightToolbar);
         anchorPane.getStyleClass().add("main");
+        VBox.setVgrow(anchorPane, Priority.ALWAYS);
 
-        AnchorPane.setLeftAnchor(instrumentSidebar, 30d);
+        AnchorPane.setLeftAnchor(instrumentSidebar, 10d);
+        AnchorPane.setTopAnchor(instrumentSidebar, 75d);
         AnchorPane.setRightAnchor(rightToolbar, 20d);
-        AnchorPane.setTopAnchor(rightToolbar, 15d);
+        AnchorPane.setTopAnchor(rightToolbar, 75d);
+
+        LegendView legend = LegendView.getInstance();
+        anchorPane.getChildren().add(legend);
+        AnchorPane.setLeftAnchor(legend, 100d);
+        AnchorPane.setTopAnchor(legend, 0.0);
+        AnchorPane.setBottomAnchor(legend, 0.0);
+
         root.getChildren().addAll(navbar, anchorPane);
 
         InfoPanel infoPanel = InfoPanel.getInstance();
