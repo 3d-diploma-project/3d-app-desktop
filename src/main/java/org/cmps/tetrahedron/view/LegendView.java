@@ -7,7 +7,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.FontWeight;
 import lombok.Getter;
 import org.cmps.tetrahedron.controller.ModelController;
-import org.cmps.tetrahedron.controller.SceneController;
 import org.cmps.tetrahedron.model.Stress;
 import org.cmps.tetrahedron.utils.FontUtils;
 import org.cmps.tetrahedron.utils.LegendUtils;

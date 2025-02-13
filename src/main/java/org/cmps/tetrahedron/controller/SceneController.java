@@ -16,11 +16,7 @@ import java.util.Objects;
  */
 public class SceneController {
 
-    @Getter
     private static final SceneController instance = new SceneController();
-    private VBox root;
-    @Getter
-    private AnchorPane anchorPane;
 
     private final Scene scene;
 
@@ -33,7 +29,7 @@ public class SceneController {
     }
 
     private Scene buildScene() {
-        root = new VBox();
+        VBox root = new VBox();
         root.getStyleClass().add("model-view-page");
         Scene scene = new Scene(root, WindowProperties.getLogicalWidth(), WindowProperties.getLogicalHeight());
         scene.getStylesheets().add(Objects.requireNonNull(SceneController.class.getResource("/styles.css")).toExternalForm());
@@ -44,7 +40,7 @@ public class SceneController {
         instrumentSidebar.getStyleClass().add("instrument-sidebar");
 
         VBox rightToolbar = new RightToolbar();
-        anchorPane = new AnchorPane(instrumentSidebar, rightToolbar);
+        AnchorPane anchorPane = new AnchorPane(instrumentSidebar, rightToolbar);
         anchorPane.getStyleClass().add("main");
         VBox.setVgrow(anchorPane, Priority.ALWAYS);
 
