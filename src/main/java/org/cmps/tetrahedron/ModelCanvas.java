@@ -98,7 +98,7 @@ public class ModelCanvas extends AWTGLCanvas {
             GL11C.glReadPixels(vertexInfoController.getX(),
                                CanvasProperties.getPhysicalHeight() - vertexInfoController.getY(), 1, 1,
                                GL11C.GL_DEPTH_COMPONENT, GL11C.GL_FLOAT, depth);
-            vertexInfoController.setDepthAndUpdateInfo(depth[0]);
+            vertexInfoController.updateVertexInfoToDisplay(depth[0]);
         }
     }
 

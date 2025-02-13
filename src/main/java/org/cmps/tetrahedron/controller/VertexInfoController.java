@@ -1,7 +1,8 @@
 package org.cmps.tetrahedron.controller;
 
 import javafx.application.Platform;
-import javafx.util.Pair;
+import lombok.Getter;
+import lombok.Setter;
 import org.cmps.tetrahedron.utils.CoordinatesConvertor;
 import org.cmps.tetrahedron.utils.Scaler;
 import org.joml.Vector3f;
@@ -17,42 +18,25 @@ import java.util.function.Consumer;
  */
 public class VertexInfoController {
 
-    private static final double MAX_ACCEPTABLE_DISTANCE_SQR = 0.002;
-
+    @Getter
     private static final VertexInfoController instance = new VertexInfoController();
 
     private final ModelController modelController = ModelController.getInstance();
     private final CoordinatesConvertor coordinatesConvertor = CoordinatesConvertor.getInstance();
+
+    @Setter
     private Consumer<String> displayInfo;
 
+    @Getter
     private int x;
+    @Getter
     private int y;
-    private float depth;
+    @Getter
     private boolean clicked;
 
     private String lastInfoToDisplay = "Click on a vertex";
 
     private VertexInfoController() {}
-
-    public static VertexInfoController getInstance() {
-        return instance;
-    }
-
-    public void setDisplayInfo(Consumer<String> displayInfo) {
-        this.displayInfo = displayInfo;
-    }
-
-    public int getX() {
-        return x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public boolean isClicked() {
-        return clicked;
-    }
 
     public void setClickCoords(int x, int y) {
         this.x = Scaler.scaleByX(x);
@@ -60,8 +44,7 @@ public class VertexInfoController {
         clicked = true;
     }
 
-    public void setDepthAndUpdateInfo(float depth) {
-        this.depth = depth;
+    public void updateVertexInfoToDisplay(float depth) {
         Vector3f worldCoord = coordinatesConvertor.getWorldCoordinates(x, y, depth);
         lastInfoToDisplay = buildNodeInfo(worldCoord);
 
@@ -73,6 +56,10 @@ public class VertexInfoController {
      * TODO: Make this search more efficient.
      */
     private String buildNodeInfo(Vector3f worldCoord) {
+        if (modelController.getVertices().isEmpty()) {
+            return lastInfoToDisplay;
+        }
+
         int closestNode = 0;
         double distanceToClosestNode = Double.MAX_VALUE;
 

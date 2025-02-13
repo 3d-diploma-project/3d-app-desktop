@@ -1,5 +1,6 @@
 package org.cmps.tetrahedron.controller;
 
+import lombok.Getter;
 import org.cmps.tetrahedron.view.InfoPanel;
 
 import java.awt.event.MouseAdapter;
@@ -8,6 +9,7 @@ import java.awt.event.MouseWheelEvent;
 
 public class MouseController extends MouseAdapter {
 
+    @Getter
     private static final MouseController instance = new MouseController();
 
     private float zoomFactor = 1.0f;
@@ -15,10 +17,6 @@ public class MouseController extends MouseAdapter {
     private double lastMouseY = 0;
     private double deltaX = 0;
     private double deltaY = 0;
-
-    public static MouseController getInstance() {
-        return instance;
-    }
 
     private MouseController() {
     }
