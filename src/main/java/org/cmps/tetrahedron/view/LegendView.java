@@ -26,8 +26,16 @@ public class LegendView extends HBox {
 
     private final int colorBoxSizeX = 80;
     private final int colorBoxSizeY = 25;
+    private final int labelBoxX = 55;
+    private final int labelBoxY = 17;
+    private final double labelBoxBorder = 0.4;
 
     private LegendView() {
+        allColorBoxes.setAlignment(Pos.CENTER);
+        allLabelBoxes.setAlignment(Pos.CENTER);
+        allLabelBoxes.setTranslateX(-(colorBoxSizeX - (double) (colorBoxSizeX - labelBoxX) / 2));
+        allLabelBoxes.setSpacing(colorBoxSizeY - labelBoxY - labelBoxBorder * 2);
+
         getChildren().addAll(allColorBoxes, allLabelBoxes);
     }
 
@@ -43,7 +51,6 @@ public class LegendView extends HBox {
     }
 
     private void addColorBoxes(Map<Integer, float[]> colors) {
-        allColorBoxes.setAlignment(Pos.CENTER);
 
         for (Map.Entry<Integer, float[]> entry : colors.entrySet()) {
             float[] values = entry.getValue();
@@ -65,16 +72,14 @@ public class LegendView extends HBox {
     }
 
     private void addValuesRangeBoxes(List<String> ranges) {
-        allLabelBoxes.setAlignment(Pos.CENTER);
-        allLabelBoxes.setSpacing(5.5);
 
         for (String border: ranges) {
             VBox labelBox = new VBox();
-            labelBox.setMinSize(55, 17);
+            labelBox.setMinSize(labelBoxX, labelBoxY);
             labelBox.setStyle("-fx-background-color: #FAFAFA; "
                     + "-fx-padding: 2; "
                     + "-fx-border-color: black; "
-                    + "-fx-border-width: 0.4px;"
+                    + "-fx-border-width: " + labelBoxBorder + "px;"
                     + "-fx-alignment: center;");
 
             Label rangeValue = new Label(border);
@@ -82,10 +87,6 @@ public class LegendView extends HBox {
 
             labelBox.getChildren().add(rangeValue);
             allLabelBoxes.getChildren().add(labelBox);
-
-            labelBox.widthProperty().addListener((obs, oldVal, newVal) -> {
-                labelBox.setTranslateX(-(colorBoxSizeX - (colorBoxSizeX - (double) (newVal)) / 2));
-            });
         }
     }
 
