@@ -1,22 +1,19 @@
 package org.cmps.tetrahedron.model;
 
 import lombok.*;
-import org.cmps.tetrahedron.utils.DataReader;
 import org.joml.Vector3f;
 
-import java.io.File;
 import java.util.*;
 
-@NoArgsConstructor
-@Data
+@Getter
 public class Model {
 
-    private Map<Integer, float[]> vertices;
-    private List<float[][]> faces;
-    private Vector3f center;
+    private final Map<Integer, float[]> vertices;
+    private final List<float[][]> faces;
+    private final Vector3f center;
 
     @Builder
-    private Model(Map<Integer, float[]> vertices, List<float[][]> faces) {
+    public Model(Map<Integer, float[]> vertices, List<float[][]> faces) {
         this.vertices = vertices;
         this.faces = faces;
         this.center = calculateModelCenter();
@@ -24,7 +21,8 @@ public class Model {
 
     private Vector3f calculateModelCenter() {
         if (vertices == null || vertices.isEmpty()) {
-            System.err.print("Model has no vertices");
+            System.out.println("Model has no vertices");
+            return null;
         }
 
         float sumX = 0, sumY = 0, sumZ = 0;
