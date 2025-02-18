@@ -1,0 +1,47 @@
+.root-box {
+    -fx-min-width: 195px;
+    -fx-max-width: 195px;
+    -fx-min-height: 413px;
+    -fx-max-height: 413px;
+    -fx-alignment: CENTER_LEFT;
+    -fx-background-radius: 38;
+    -fx-border-radius: 38;
+    -fx-border-width: 1;
+    -fx-border-color: #CACACA;
+    -fx-padding: 40 16;
+    -fx-background-color: #E7EDF2;
+    -fx-spacing: 10
+}
+
+.data-label {
+    -fx-font-family: "Geologic";
+    -fx-font-size: 12;
+}
+
+.load-button {
+    -fx-font-family: "Geologic";
+    -fx-font-size: 12;
+    -fx-background-color: #1E0094;
+    -fx-text-fill: white;
+    -fx-background-radius: 4;
+    -fx-max-width: Infinity;
+}
+
+.load-button:hover {
+    -fx-background-color: #1E00AA;
+}
+
+.vbox-label-button {
+    -fx-spacing: 5;
+}
+
+.vbox-label-button VBox {
+    -fx-spacing: 0;
+}
+
+.vbox-label-button VBox .secondary-label {
+    -fx-text-fill: #727272;
+    -fx-font-weight: bold;
+    -fx-font-size: 10;
+    -fx-translate-y: -2;
+}
