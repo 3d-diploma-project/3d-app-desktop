@@ -12,6 +12,7 @@ import javafx.stage.FileChooser;
 import org.cmps.tetrahedron.controller.ModelController;
 import org.cmps.tetrahedron.controller.SceneController;
 import org.cmps.tetrahedron.model.Stress;
+import org.cmps.tetrahedron.utils.FileChooserUtils;
 import org.cmps.tetrahedron.utils.FontUtils;
 
 import java.io.File;
@@ -29,9 +30,10 @@ public class RightToolbar extends VBox {
     }
 
     private void selectStressFile(ActionEvent event) {
-        FileChooser fileChooser = new FileChooser();
+        FileChooser fileChooser = FileChooserUtils.createFileChooser();
         File file = fileChooser.showOpenDialog(SceneController.getScene().getWindow());
         if (file != null) {
+            FileChooserUtils.saveLastUsedDirectory(file);
             ModelController.getInstance().initStress(file);
             Stress stressModel = ModelController.getInstance().getStress();
             LegendView.getInstance().updateLegend(stressModel.getMinStress(), stressModel.getMaxStress());
