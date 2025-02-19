@@ -1,0 +1,44 @@
+.root-box {
+    -fx-min-width: 195px;
+    -fx-max-width: 195px;
+    -fx-min-height: 413px;
+    -fx-max-height: 413px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0.3, 0, 3);
+    -fx-alignment: CENTER_LEFT;
+    -fx-background-radius: 38;
+    -fx-border-radius: 38;
+    -fx-border-width: 1;
+    -fx-border-color: #CACACA;
+    -fx-padding: 40 16;
+    -fx-background-color: #E7EDF2;
+    -fx-spacing: 10
+}
+
+.data-label {
+    -fx-font-family: "Geologica Roman";
+    -fx-font-size: 12;
+}
+
+.load-button {
+    -fx-font-family: "Geologica Roman Light";
+    -fx-font-size: 12;
+    -fx-background-color: #1E0094;
+    -fx-text-fill: white;
+    -fx-background-radius: 4;
+    -fx-max-width: Infinity;
+}
+
+.load-button:hover {
+    -fx-background-color: #1E00AA;
+}
+
+.vbox-label-button {
+    -fx-spacing: 2;
+}
+
+.vbox-label-button .secondary-label {
+    -fx-font-family: "Geologica Roman Light";
+    -fx-text-fill: #727272;
+    -fx-font-size: 10;
+    -fx-translate-y: -5;
+}
