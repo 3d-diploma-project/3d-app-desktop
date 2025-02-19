@@ -1,13 +1,11 @@
 package org.cmps.tetrahedron.controller;
 
-import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.*;
 import org.cmps.tetrahedron.utils.ResourceReader;
 import org.cmps.tetrahedron.view.*;
 import javafx.scene.Scene;
 import org.cmps.tetrahedron.config.WindowProperties;
 
-import java.io.IOException;
 import java.util.Objects;
 
 /**
@@ -41,7 +39,7 @@ public class SceneController {
         VBox instrumentSidebar = new InstrumentsSidebar();
         instrumentSidebar.getStyleClass().add("instrument-sidebar");
 
-        VBox rightToolbar = (VBox) ResourceReader.readComponent("/view/RightToolbar.fxml");
+        VBox rightToolbar = ResourceReader.readComponent("/view/RightToolbar.fxml", VBox.class);
 
         AnchorPane anchorPane = new AnchorPane(instrumentSidebar, rightToolbar);
         anchorPane.getStyleClass().add("main");

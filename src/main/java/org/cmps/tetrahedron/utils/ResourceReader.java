@@ -9,6 +9,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
+import static com.sun.jmx.mbeanserver.Util.cast;
+
 public class ResourceReader {
     public static ImageView imageReader(String filePath) {
         InputStream input = ResourceReader.class.getResourceAsStream(filePath);
@@ -23,13 +25,13 @@ public class ResourceReader {
         return new ImageView(image);
     }
 
-    public static Node readComponent(String path) {
+    public static <T> T readComponent(String path, Class<T> type) {
         FXMLLoader loader = new FXMLLoader(ResourceReader.class.getResource(path));
         try {
-            return loader.load();
+            Node component = loader.load();
+            return type.cast(component);
         } catch (IOException e) {
-            e.printStackTrace();
-            return null;
+            throw new RuntimeException("Error loading FXML file: " + e.getMessage());
         }
     }
 
