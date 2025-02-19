@@ -1,6 +1,7 @@
 package org.cmps.tetrahedron.controller;
 
 import javafx.stage.FileChooser;
+import lombok.Getter;
 
 import java.io.File;
 import java.util.prefs.Preferences;
@@ -8,17 +9,12 @@ import java.util.prefs.Preferences;
 public class FileChooserController {
     private static final String LAST_USED_DIRECTORY_KEY = "last_used_directory";
     private final Preferences prefs;
-    private static FileChooserController instance;
+
+    @Getter
+    private static FileChooserController instance = new FileChooserController();
 
     private FileChooserController() {
         this.prefs = Preferences.userNodeForPackage(FileChooserController.class);
-    }
-
-    public static FileChooserController getInstance() {
-        if (instance == null) {
-            instance = new FileChooserController();
-        }
-        return instance;
     }
 
     public FileChooser createFileChooser() {
