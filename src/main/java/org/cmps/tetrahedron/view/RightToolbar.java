@@ -12,18 +12,8 @@ import java.io.File;
 
 public class RightToolbar {
 
-    public RightToolbar() {
-        getStyleClass().add("right-toolbar");
-
-        setupColourLayout();
-        setupFileUploadSection("Напруження у вузлах", this::selectStressFile);
-        setupFileUploadSection("Переміщення у вузлах", null);
-        setupFileUploadSection("Прикладені сили", null);
-        setupFileUploadSection("Закріплені вузли", null);
-    }
-
     @FXML
-    private void selectStressFile(ActionEvent event) {
+    private void selectStressFile(MouseEvent mouseEvent) {
         FileChooserController fileChooserController = FileChooserController.getInstance();
         FileChooser fileChooser = fileChooserController.createFileChooser();
         File file = fileChooser.showOpenDialog(SceneController.getScene().getWindow());
