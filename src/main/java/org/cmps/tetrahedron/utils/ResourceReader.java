@@ -1,9 +1,12 @@
 package org.cmps.tetrahedron.utils;
 
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 
 public class ResourceReader {
@@ -19,4 +22,15 @@ public class ResourceReader {
         Image image = new Image(input);
         return new ImageView(image);
     }
+
+    public static <T> T readComponent(String path, Class<T> type) {
+        FXMLLoader loader = new FXMLLoader(ResourceReader.class.getResource(path));
+        try {
+            Node component = loader.load();
+            return type.cast(component);
+        } catch (IOException e) {
+            throw new RuntimeException("Error loading FXML file: " + e.getMessage());
+        }
+    }
+
 }

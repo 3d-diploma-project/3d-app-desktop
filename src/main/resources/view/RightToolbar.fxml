@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.cmps.tetrahedron.view.RightToolbar"
+            stylesheets="@/style/right-toolbar.css"
+            prefWidth="195" prefHeight="413"
+            styleClass="root-box" >
+
+    <VBox styleClass="vbox-label-button">
+        <Label styleClass="data-label" text="Напруження у вузлах" />
+        <Label styleClass="secondary-label" text="(напруження по мізесу)" />
+        <Button styleClass="load-button" text="Завантажити файл" onMouseClicked="#selectStressFile"/>
+    </VBox>
+
+    <VBox styleClass="vbox-label-button">
+        <Label styleClass="data-label" text="Переміщення у вузлах" />
+        <Button styleClass="load-button" text="Завантажити файл" />
+    </VBox>
+
+    <VBox styleClass="vbox-label-button">
+        <Label styleClass="data-label" text="Довільна характеристика" />
+        <Button styleClass="load-button" text="Завантажити файл" />
+    </VBox>
+
+</VBox>
