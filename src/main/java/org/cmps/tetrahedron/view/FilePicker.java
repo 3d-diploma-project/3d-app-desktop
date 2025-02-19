@@ -4,8 +4,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.stage.FileChooser;
 import lombok.Getter;
+import org.cmps.tetrahedron.controller.FileChooserController;
 import org.cmps.tetrahedron.controller.SceneController;
-import org.cmps.tetrahedron.utils.FileChooserUtils;
 
 import java.io.File;
 import java.util.ResourceBundle;
@@ -31,11 +31,12 @@ public class FilePicker {
 
     @FXML
     public void onClick() {
-        FileChooser fileChooser = FileChooserUtils.createFileChooser();
+        FileChooserController fileChooserController = FileChooserController.getInstance();
+        FileChooser fileChooser = fileChooserController.createFileChooser();
         file = fileChooser.showOpenDialog(SceneController.getScene().getWindow());
 
         if (file != null) {
-            FileChooserUtils.saveLastUsedDirectory(file);
+            fileChooserController.saveLastUsedDirectory(file);
             label.setText(resources.getString("file-type") + ": " + file.getName());
         }
     }

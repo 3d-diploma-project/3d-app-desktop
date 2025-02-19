@@ -1,18 +1,30 @@
-package org.cmps.tetrahedron.utils;
+package org.cmps.tetrahedron.controller;
 
 import javafx.stage.FileChooser;
 
 import java.io.File;
 import java.util.prefs.Preferences;
 
-public class FileChooserUtils {
+public class FileChooserController {
     private static final String LAST_USED_DIRECTORY_KEY = "last_used_directory";
-    private static final Preferences prefs = Preferences.userNodeForPackage(FileChooserUtils.class);
+    private final Preferences prefs;
+    private static FileChooserController instance;
 
-    public static FileChooser createFileChooser() {
+    private FileChooserController() {
+        this.prefs = Preferences.userNodeForPackage(FileChooserController.class);
+    }
+
+    public static FileChooserController getInstance() {
+        if (instance == null) {
+            instance = new FileChooserController();
+        }
+        return instance;
+    }
+
+    public FileChooser createFileChooser() {
         FileChooser fileChooser = new FileChooser();
-
         String lastDir = prefs.get(LAST_USED_DIRECTORY_KEY, null);
+
         if (lastDir != null) {
             File lastDirFile = new File(lastDir);
             if (lastDirFile.exists() && lastDirFile.isDirectory()) {
@@ -22,7 +34,7 @@ public class FileChooserUtils {
         return fileChooser;
     }
 
-    public static void saveLastUsedDirectory(File file) {
+    public void saveLastUsedDirectory(File file) {
         if (file != null && file.getParentFile() != null) {
             prefs.put(LAST_USED_DIRECTORY_KEY, file.getParent());
         }
