@@ -3,6 +3,7 @@
     -fx-max-width: 195px;
     -fx-min-height: 413px;
     -fx-max-height: 413px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0.3, 0, 3);
     -fx-alignment: CENTER_LEFT;
     -fx-background-radius: 38;
     -fx-border-radius: 38;
@@ -14,12 +15,12 @@
 }
 
 .data-label {
-    -fx-font-family: "Geologic";
+    -fx-font-family: "Geologica Roman";
     -fx-font-size: 12;
 }
 
 .load-button {
-    -fx-font-family: "Geologic";
+    -fx-font-family: "Geologica Roman Light";
     -fx-font-size: 12;
     -fx-background-color: #1E0094;
     -fx-text-fill: white;
@@ -32,16 +33,12 @@
 }
 
 .vbox-label-button {
-    -fx-spacing: 5;
+    -fx-spacing: 2;
 }
 
-.vbox-label-button VBox {
-    -fx-spacing: 0;
-}
-
-.vbox-label-button VBox .secondary-label {
+.vbox-label-button .secondary-label {
+    -fx-font-family: "Geologica Roman Light";
     -fx-text-fill: #727272;
-    -fx-font-weight: bold;
     -fx-font-size: 10;
-    -fx-translate-y: -2;
+    -fx-translate-y: -5;
 }

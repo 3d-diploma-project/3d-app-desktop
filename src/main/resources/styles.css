@@ -1,3 +1,15 @@
+@font-face {
+    //font-weight: 400
+    -fx-font-family: "Geologica Roman";
+    src: url('/fonts/Geologica-Regular.ttf');
+}
+
+@font-face {
+    //font-weight: 300
+    -fx-font-family: "Geologica Roman Light";
+    src: url('/fonts/Geologica-Light.ttf');
+}
+
 .main {
 }
 
